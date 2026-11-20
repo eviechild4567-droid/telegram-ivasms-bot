@@ -23,8 +23,8 @@ class IvaSmsAPI:
     def load_cookies(self) -> bool:
         """Load IvaSms cookies from file"""
         try:
-            with open(self.cookies_path, 'r') as f:
-                self.cookies = json.load(f)
+                data = json.load(f)
+                self.cookies = {c['name']: c['value'] for c in data} if isinstance(data, list) else data
             logger.info("✅ IvaSms cookies loaded successfully")
             return True
         except FileNotFoundError:
@@ -41,13 +41,10 @@ class IvaSmsAPI:
         try:
             url = f"{self.api_url}{endpoint}"
             headers = kwargs.pop('headers', {})
-            headers['User-Agent'] = 'TelegramIvaSmsBot/1.0'
-            
             kwargs['timeout'] = Config.REQUEST_TIMEOUT
             kwargs['cookies'] = self.cookies
             kwargs['headers'] = headers
-            
-            response = requests.request(method, url, **kwargs)
+            response = self.session.request(method, url, **kwargs)
             response.raise_for_status()
             
             return response.json()
