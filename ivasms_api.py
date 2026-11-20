@@ -12,8 +12,8 @@ class IvaSmsAPI:
     """IvaSms Panel API Integration"""
     
     def __init__(self):
-        self.api_url = Config.IVASMS_API_URL
-        self.panel_url = Config.IVASMS_PANEL_URL
+                self.api_url = Config.IVASMS_API_URL.strip()
+        self.panel_url = Config.IVASMS_PANEL_URL.strip()
         self.cookies_path = Config.IVASMS_COOKIE_PATH
         self.session = requests.Session()
         self.cookies = {}
