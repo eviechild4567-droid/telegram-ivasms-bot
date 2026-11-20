@@ -1,4 +1,4 @@
-import requests
+import cloudscraper
 import json
 import logging
 from datetime import datetime
@@ -12,10 +12,10 @@ class IvaSmsAPI:
     """IvaSms Panel API Integration"""
     
     def __init__(self):
-                self.api_url = Config.IVASMS_API_URL.strip()
-        self.panel_url = Config.IVASMS_PANEL_URL.strip()
+        self.api_url = "https://www.ivasms.com"
+        self.panel_url = "https://www.ivasms.com"
         self.cookies_path = Config.IVASMS_COOKIE_PATH
-        self.session = requests.Session()
+        self.session = cloudscraper.create_scraper()
         self.cookies = {}
         self.load_cookies()
     
